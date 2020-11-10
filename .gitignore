@@ -158,6 +158,8 @@ dmypy.json
 # proportion of contributors will probably not be using Sublime Text
 # *.sublime-project
 
+.DS_Store
+
 # SFTP configuration file
 sftp-config.json
 

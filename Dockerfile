@@ -1,14 +1,12 @@
-FROM bitnami/minideb:stretch
-LABEL Author="JINO"
+FROM python:3.7.15-alpine
 
-RUN install_packages nginx python3 python3-pip && \
-    pip3 install flask && \
-    apt-get remove --purge python3-pip -y && \
-    mkdir -p /app
+WORKDIR /code
 
-COPY /app/ /app
-WORKDIR /app
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
-EXPOSE 8080
-ENTRYPOINT ["python3", "catsnation.py"]
+RUN pip install --no-cache-dir gunicorn flask
+
+COPY ./app /code/
+
+
+RUN ls -la
+
+CMD ["gunicorn", "--conf", "gunicorn_conf.py", "--bind", "0.0.0.0:8080", "wsgi:app"]
